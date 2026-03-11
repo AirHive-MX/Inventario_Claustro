@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"c:/Users/rafae/Documents/Interfaces/Inventario_Claustro/Inventario_Claustro\" log --oneline -5)",
+      "Read(//tmp/airhive_webpage/**)",
+      "Bash(git -C \"c:/Users/rafae/Documents/Interfaces/Inventario_Claustro/Inventario_Claustro\" status)",
+      "Bash(git -C \"c:/Users/rafae/Documents/Interfaces/Inventario_Claustro/Inventario_Claustro\" remote -v)",
+      "Bash(npm run build:*)"
+    ]
+  }
+}

@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ah-navy: #162A42;
+  --ah-indigo: #1501A5;
+  --ah-violet: #6443DB;
+  --ah-blue: #2A47F6;
+  --ah-gray: #DDDDDD;
+  --ah-white: #FFFFFF;
+  --ah-charcoal: #202020;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--ah-charcoal);
+  background: var(--ah-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+  color: #e7edf9;
+  background: #0d1424;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f4f4f4;
+  border-radius: 5px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0b1020;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--ah-indigo), var(--ah-blue));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(var(--ah-violet), var(--ah-blue));
+}
+
+/* Selection highlight */
+::selection {
+  background: rgba(42, 71, 246, 0.2);
+  color: var(--ah-navy);
+}
+
+.dark ::selection {
+  background: rgba(42, 71, 246, 0.4);
+  color: #edf3ff;
+}
+
+/* Smooth modal backdrop */
+.modal-backdrop {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  animation: slideUp 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Table row hover effect */
+.table-row-hover {
+  transition: all 0.15s ease;
+}
+
+.table-row-hover:hover {
+  background-color: rgba(42, 71, 246, 0.04);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(22, 42, 66, 0.06);
+}
+
+.dark .table-row-hover:hover {
+  background-color: rgba(42, 71, 246, 0.12);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Status badge styles - Light */
+.badge-inventario {
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.badge-prestado {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.badge-vendido {
+  background-color: #fce4ec;
+  color: #b71c1c;
+  border: 1px solid #f8bbd0;
+}
+
+/* Status badge styles - Dark */
+.dark .badge-inventario {
+  background-color: rgba(22, 101, 52, 0.3);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.dark .badge-prestado {
+  background-color: rgba(146, 64, 14, 0.3);
+  color: #fcd34d;
+  border: 1px solid rgba(253, 230, 138, 0.3);
+}
+
+.dark .badge-vendido {
+  background-color: rgba(183, 28, 28, 0.25);
+  color: #fca5a5;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+/* Input focus styles */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--ah-blue) !important;
+  box-shadow: 0 0 0 3px rgba(42, 71, 246, 0.15);
+}
+
+.dark input:focus, .dark select:focus, .dark textarea:focus {
+  box-shadow: 0 0 0 3px rgba(42, 71, 246, 0.3);
+}
+
+/* Button gradient */
+.btn-primary {
+  background: linear-gradient(115deg, #1501A5, #2A47F6);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(115deg, #1501A5, #6443DB);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(42, 71, 246, 0.35);
+}
+
+.dark .btn-primary:hover {
+  box-shadow: 0 4px 20px rgba(42, 71, 246, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Theme toggle animation */
+.theme-toggle {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
