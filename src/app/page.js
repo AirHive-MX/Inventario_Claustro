@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import InventoryTable from '@/components/InventoryTable';
 import PieceModal from '@/components/PieceModal';
 import PieceDetailModal from '@/components/PieceDetailModal';
+import Popup from '@/components/Popup';
 
 export default function Home() {
   const [pieces, setPieces] = useState([]);
@@ -21,12 +22,12 @@ export default function Home() {
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
-  // Toast
-  const [toast, setToast] = useState(null);
+  // Popup states
+  const [popup, setPopup] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
-  const showToast = (message, type = 'success') => {
-    setToast({ message, type });
-    setTimeout(() => setToast(null), 3000);
+  const showPopup = (message, type = 'success') => {
+    setPopup({ message, type });
   };
 
   // Fetch all pieces
@@ -37,7 +38,7 @@ export default function Home() {
       .order('created_at', { ascending: false });
 
     if (error) {
-      showToast('Error al cargar el inventario', 'error');
+      showPopup('Error al cargar el inventario', 'error');
       console.error(error);
     } else {
       setPieces(data || []);
@@ -92,14 +93,14 @@ export default function Home() {
           .eq('id', selectedPiece.id);
 
         if (error) throw error;
-        showToast('Pieza actualizada correctamente');
+        showPopup('Pieza actualizada correctamente', 'success');
       } else {
         const { error } = await supabase
           .from('art_pieces')
           .insert([pieceData]);
 
         if (error) throw error;
-        showToast('Pieza agregada correctamente');
+        showPopup('Pieza agregada correctamente', 'success');
       }
 
       setShowForm(false);
@@ -108,22 +109,26 @@ export default function Home() {
     } catch (error) {
       console.error('Save error:', error);
       if (error.code === '23505') {
-        showToast('Ya existe una pieza con ese código', 'error');
+        showPopup('Ya existe una pieza con ese código', 'error');
       } else {
-        showToast('Error al guardar la pieza', 'error');
+        showPopup('Error al guardar la pieza', 'error');
       }
     } finally {
       setSaving(false);
     }
   };
 
-  // Delete piece
-  const handleDelete = async (piece) => {
-    if (!window.confirm(`¿Está seguro de que desea eliminar "${piece.name}" (${piece.code})?\n\nEsta acción no se puede deshacer.`)) {
-      return;
-    }
+  // Request delete confirmation via popup
+  const handleDelete = (piece) => {
+    setConfirmDelete(piece);
+  };
 
+  // Actually delete after confirmation
+  const executeDelete = async () => {
+    const piece = confirmDelete;
+    setConfirmDelete(null);
     setDeleting(true);
+
     try {
       if (piece.photo_url) {
         const path = piece.photo_url.split('/art-photos/')[1];
@@ -139,13 +144,13 @@ export default function Home() {
 
       if (error) throw error;
 
-      showToast('Pieza eliminada');
+      showPopup('Pieza eliminada correctamente', 'success');
       setShowDetail(false);
       setSelectedPiece(null);
       await fetchPieces();
     } catch (error) {
       console.error('Delete error:', error);
-      showToast('Error al eliminar la pieza', 'error');
+      showPopup('Error al eliminar la pieza', 'error');
     } finally {
       setDeleting(false);
     }
@@ -309,12 +314,24 @@ export default function Home() {
         />
       )}
 
-      {toast && (
-        <div className={`fixed bottom-6 right-6 z-[70] px-6 py-4 rounded-2xl shadow-lg text-lg font-semibold text-white transition-all ${
-          toast.type === 'error' ? 'bg-red-500' : 'bg-green-500'
-        }`}>
-          {toast.message}
-        </div>
+      {/* Delete confirmation popup */}
+      {confirmDelete && (
+        <Popup
+          type="confirm"
+          title="Eliminar pieza"
+          message={`¿Está seguro de que desea eliminar "${confirmDelete.name}" (${confirmDelete.code})? Esta acción no se puede deshacer.`}
+          onConfirm={executeDelete}
+          onClose={() => setConfirmDelete(null)}
+        />
+      )}
+
+      {/* Notification popup */}
+      {popup && (
+        <Popup
+          type={popup.type}
+          message={popup.message}
+          onClose={() => setPopup(null)}
+        />
       )}
     </div>
   );
