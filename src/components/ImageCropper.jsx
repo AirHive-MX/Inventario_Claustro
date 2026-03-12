@@ -81,9 +81,9 @@ export default function ImageCropper({ imageSrc, onCropComplete, onCancel }) {
         />
       </div>
 
-      <div className="bg-white p-6 flex flex-col gap-4">
+      <div className="bg-white dark:bg-[#121e32] p-4 sm:p-6 flex flex-col gap-4 transition-colors duration-300">
         <div className="flex items-center gap-4">
-          <span className="text-lg font-medium text-ah-navy min-w-[60px]">Zoom:</span>
+          <span className="text-lg font-medium text-ah-navy dark:text-[#d0daf0] min-w-[60px]">Zoom:</span>
           <input
             type="range"
             min={1}
@@ -95,16 +95,16 @@ export default function ImageCropper({ imageSrc, onCropComplete, onCancel }) {
           />
         </div>
 
-        <div className="flex gap-4 justify-end">
+        <div className="flex gap-3 sm:gap-4 justify-end">
           <button
             onClick={onCancel}
-            className="px-8 py-4 text-lg font-semibold rounded-full border-2 border-ah-gray text-ah-charcoal hover:bg-gray-50 transition-colors"
+            className="flex-1 sm:flex-none px-6 sm:px-8 py-4 text-lg font-semibold rounded-full border-2 border-ah-gray dark:border-[#3a4e6a] text-ah-charcoal dark:text-[#a0b4d0] hover:bg-gray-50 dark:hover:bg-[#1a2236] transition-colors"
           >
             Cancelar
           </button>
           <button
             onClick={handleCrop}
-            className="btn-primary px-8 py-4 text-lg font-semibold rounded-full text-white"
+            className="flex-1 sm:flex-none btn-primary px-6 sm:px-8 py-4 text-lg font-semibold rounded-full text-white"
           >
             Recortar Foto
           </button>

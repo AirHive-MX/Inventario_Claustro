@@ -200,32 +200,32 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50/80 dark:from-[#0d1424] dark:to-[#0b1020] transition-colors duration-300">
       <Header />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
-          <div className="bg-white dark:bg-[#1a2236] rounded-2xl p-4 sm:p-5 border border-ah-gray/50 dark:border-[#2a3650] shadow-sm transition-colors duration-300">
-            <p className="text-sm font-medium text-ah-charcoal/50 dark:text-[#a0b4d0] uppercase tracking-wide">Total</p>
-            <p className="text-3xl sm:text-4xl font-bold text-ah-navy dark:text-[#edf3ff] mt-1">{countByStatus.total}</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-8">
+          <div className="bg-white dark:bg-[#1a2236] rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-ah-gray/50 dark:border-[#2a3650] shadow-sm transition-colors duration-300">
+            <p className="text-xs sm:text-sm font-medium text-ah-charcoal/50 dark:text-[#a0b4d0] uppercase tracking-wide">Total</p>
+            <p className="text-2xl sm:text-4xl font-bold text-ah-navy dark:text-[#edf3ff] mt-1">{countByStatus.total}</p>
           </div>
-          <div className="bg-white dark:bg-[#1a2236] rounded-2xl p-4 sm:p-5 border border-green-100 dark:border-green-900/40 shadow-sm transition-colors duration-300">
-            <p className="text-sm font-medium text-green-600 dark:text-green-400 uppercase tracking-wide">En Inventario</p>
-            <p className="text-3xl sm:text-4xl font-bold text-green-700 dark:text-green-300 mt-1">{countByStatus.inventario}</p>
+          <div className="bg-white dark:bg-[#1a2236] rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-green-100 dark:border-green-900/40 shadow-sm transition-colors duration-300">
+            <p className="text-xs sm:text-sm font-medium text-green-600 dark:text-green-400 uppercase tracking-wide">En Inventario</p>
+            <p className="text-2xl sm:text-4xl font-bold text-green-700 dark:text-green-300 mt-1">{countByStatus.inventario}</p>
           </div>
-          <div className="bg-white dark:bg-[#1a2236] rounded-2xl p-4 sm:p-5 border border-yellow-100 dark:border-yellow-900/40 shadow-sm transition-colors duration-300">
-            <p className="text-sm font-medium text-yellow-600 dark:text-yellow-400 uppercase tracking-wide">Prestados</p>
-            <p className="text-3xl sm:text-4xl font-bold text-yellow-700 dark:text-yellow-300 mt-1">{countByStatus.prestado}</p>
+          <div className="bg-white dark:bg-[#1a2236] rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-yellow-100 dark:border-yellow-900/40 shadow-sm transition-colors duration-300">
+            <p className="text-xs sm:text-sm font-medium text-yellow-600 dark:text-yellow-400 uppercase tracking-wide">Prestados</p>
+            <p className="text-2xl sm:text-4xl font-bold text-yellow-700 dark:text-yellow-300 mt-1">{countByStatus.prestado}</p>
           </div>
-          <div className="bg-white dark:bg-[#1a2236] rounded-2xl p-4 sm:p-5 border border-red-100 dark:border-red-900/40 shadow-sm transition-colors duration-300">
-            <p className="text-sm font-medium text-red-600 dark:text-red-400 uppercase tracking-wide">Vendidos</p>
-            <p className="text-3xl sm:text-4xl font-bold text-red-700 dark:text-red-300 mt-1">{countByStatus.vendido}</p>
+          <div className="bg-white dark:bg-[#1a2236] rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-red-100 dark:border-red-900/40 shadow-sm transition-colors duration-300">
+            <p className="text-xs sm:text-sm font-medium text-red-600 dark:text-red-400 uppercase tracking-wide">Vendidos</p>
+            <p className="text-2xl sm:text-4xl font-bold text-red-700 dark:text-red-300 mt-1">{countByStatus.vendido}</p>
           </div>
         </div>
 
         {/* Action Bar */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-6 sm:mb-8">
+        <div className="flex flex-col gap-3 sm:gap-4 mb-6 sm:mb-8">
           <button
             onClick={handleAddNew}
-            className="btn-primary px-8 py-4 text-xl font-semibold rounded-full text-white flex items-center justify-center gap-3 sm:w-auto"
+            className="btn-primary w-full sm:w-auto px-8 py-4 text-xl font-semibold rounded-full text-white flex items-center justify-center gap-3"
           >
             <span className="text-2xl">+</span>
             Agregar Pieza
@@ -238,7 +238,7 @@ export default function Home() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar por código, nombre, tipo, artista..."
+                placeholder="Buscar por código, nombre..."
                 className="w-full h-14 pl-12 pr-4 text-lg rounded-full border-2 border-ah-gray dark:border-[#2a3650] bg-white dark:bg-[#1a2236] text-ah-charcoal dark:text-[#edf3ff] placeholder-gray-400 dark:placeholder-[#5a6e8a] transition-colors duration-300"
               />
               {search && (
@@ -251,27 +251,29 @@ export default function Home() {
               )}
             </div>
 
-            <select
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
-              className="h-14 px-4 text-base rounded-full border-2 border-ah-gray dark:border-[#2a3650] bg-white dark:bg-[#1a2236] text-ah-charcoal dark:text-[#edf3ff] min-w-[160px] transition-colors duration-300"
-            >
-              <option value="">Todos los tipos</option>
-              {uniqueTypes.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
-            </select>
+            <div className="flex gap-3">
+              <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+                className="h-14 px-4 text-base rounded-full border-2 border-ah-gray dark:border-[#2a3650] bg-white dark:bg-[#1a2236] text-ah-charcoal dark:text-[#edf3ff] flex-1 sm:flex-none sm:min-w-[160px] transition-colors duration-300"
+              >
+                <option value="">Todos los tipos</option>
+                {uniqueTypes.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
 
-            <select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
-              className="h-14 px-4 text-base rounded-full border-2 border-ah-gray dark:border-[#2a3650] bg-white dark:bg-[#1a2236] text-ah-charcoal dark:text-[#edf3ff] min-w-[160px] transition-colors duration-300"
-            >
-              <option value="">Todos los estados</option>
-              <option value="inventario">En Inventario</option>
-              <option value="prestado">Prestado</option>
-              <option value="vendido">Vendido</option>
-            </select>
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="h-14 px-4 text-base rounded-full border-2 border-ah-gray dark:border-[#2a3650] bg-white dark:bg-[#1a2236] text-ah-charcoal dark:text-[#edf3ff] flex-1 sm:flex-none sm:min-w-[160px] transition-colors duration-300"
+              >
+                <option value="">Todos los estados</option>
+                <option value="inventario">En Inventario</option>
+                <option value="prestado">Prestado</option>
+                <option value="vendido">Vendido</option>
+              </select>
+            </div>
           </div>
         </div>
 

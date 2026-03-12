@@ -54,11 +54,11 @@ export default function PieceDetailModal({ piece, onEdit, onDelete, onClose, del
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center modal-backdrop">
-      <div className="absolute inset-0 bg-black/50 dark:bg-black/70" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/50 dark:bg-black/70 hidden sm:block" onClick={onClose} />
 
-      <div className="relative z-10 w-full max-w-3xl mx-4 my-4 sm:my-8 bg-white dark:bg-[#121e32] rounded-3xl shadow-2xl max-h-[90vh] overflow-y-auto modal-content transition-colors duration-300">
+      <div className="relative z-10 w-full max-w-3xl mx-0 sm:mx-4 my-0 sm:my-8 bg-white dark:bg-[#121e32] rounded-none sm:rounded-3xl shadow-2xl h-full sm:h-auto sm:max-h-[90vh] overflow-y-auto modal-content transition-colors duration-300">
         {/* Header */}
-        <div className="sticky top-0 z-10 bg-white dark:bg-[#121e32] border-b border-ah-gray/50 dark:border-[#2a3650] rounded-t-3xl px-6 sm:px-8 py-5 flex items-center justify-between transition-colors duration-300">
+        <div className="sticky top-0 z-10 bg-white dark:bg-[#121e32] border-b border-ah-gray/50 dark:border-[#2a3650] sm:rounded-t-3xl px-4 sm:px-8 py-4 sm:py-5 flex items-center justify-between transition-colors duration-300">
           <div className="flex items-center gap-3">
             <span className={`badge-${piece.status} px-4 py-2 rounded-full text-base font-semibold`}>
               {STATUS_LABELS[piece.status] || piece.status}
@@ -192,28 +192,30 @@ export default function PieceDetailModal({ piece, onEdit, onDelete, onClose, del
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-white dark:bg-[#121e32] border-t border-ah-gray/50 dark:border-[#2a3650] rounded-b-3xl px-6 sm:px-8 py-5 flex gap-4 justify-between transition-colors duration-300">
-          <button
-            onClick={() => onDelete(piece)}
-            disabled={deleting}
-            className="px-6 py-4 text-lg font-semibold rounded-full border-2 border-red-300 dark:border-red-700/50 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors disabled:opacity-50"
-          >
-            {deleting ? 'Eliminando...' : 'Eliminar'}
-          </button>
+        <div className="sticky bottom-0 bg-white dark:bg-[#121e32] border-t border-ah-gray/50 dark:border-[#2a3650] sm:rounded-b-3xl px-4 sm:px-8 py-4 sm:py-5 transition-colors duration-300">
+          <div className="flex flex-col-reverse sm:flex-row gap-3 sm:gap-4 sm:justify-between">
+            <button
+              onClick={() => onDelete(piece)}
+              disabled={deleting}
+              className="px-6 py-4 text-lg font-semibold rounded-full border-2 border-red-300 dark:border-red-700/50 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors disabled:opacity-50"
+            >
+              {deleting ? 'Eliminando...' : 'Eliminar'}
+            </button>
 
-          <div className="flex gap-4">
-            <button
-              onClick={onClose}
-              className="px-8 py-4 text-lg font-semibold rounded-full border-2 border-ah-gray dark:border-[#3a4e6a] text-ah-charcoal dark:text-[#a0b4d0] hover:bg-gray-50 dark:hover:bg-[#1a2236] transition-colors"
-            >
-              Cerrar
-            </button>
-            <button
-              onClick={() => onEdit(piece)}
-              className="btn-primary px-10 py-4 text-lg font-semibold rounded-full text-white"
-            >
-              Editar Pieza
-            </button>
+            <div className="flex gap-3 sm:gap-4">
+              <button
+                onClick={onClose}
+                className="flex-1 sm:flex-none px-6 sm:px-8 py-4 text-lg font-semibold rounded-full border-2 border-ah-gray dark:border-[#3a4e6a] text-ah-charcoal dark:text-[#a0b4d0] hover:bg-gray-50 dark:hover:bg-[#1a2236] transition-colors"
+              >
+                Cerrar
+              </button>
+              <button
+                onClick={() => onEdit(piece)}
+                className="flex-1 sm:flex-none btn-primary px-6 sm:px-10 py-4 text-lg font-semibold rounded-full text-white"
+              >
+                Editar Pieza
+              </button>
+            </div>
           </div>
         </div>
       </div>

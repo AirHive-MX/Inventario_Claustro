@@ -194,15 +194,15 @@ export default function PieceModal({ piece, onSave, onClose, saving }) {
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-start justify-center modal-backdrop">
-        <div className="absolute inset-0 bg-black/50 dark:bg-black/70" onClick={onClose} />
+      <div className="fixed inset-0 z-50 flex items-start sm:items-start justify-center modal-backdrop">
+        <div className="absolute inset-0 bg-black/50 dark:bg-black/70 hidden sm:block" onClick={onClose} />
 
         <div
           ref={modalRef}
-          className="relative z-10 w-full max-w-3xl mx-4 my-4 sm:my-8 bg-white dark:bg-[#121e32] rounded-3xl shadow-2xl max-h-[90vh] overflow-y-auto modal-content transition-colors duration-300"
+          className="relative z-10 w-full max-w-3xl mx-0 sm:mx-4 my-0 sm:my-8 bg-white dark:bg-[#121e32] rounded-none sm:rounded-3xl shadow-2xl h-full sm:h-auto sm:max-h-[90vh] overflow-y-auto modal-content transition-colors duration-300"
         >
           {/* Header */}
-          <div className="sticky top-0 z-10 bg-white dark:bg-[#121e32] border-b border-ah-gray/50 dark:border-[#2a3650] rounded-t-3xl px-6 sm:px-8 py-5 flex items-center justify-between transition-colors duration-300">
+          <div className="sticky top-0 z-10 bg-white dark:bg-[#121e32] border-b border-ah-gray/50 dark:border-[#2a3650] sm:rounded-t-3xl px-4 sm:px-8 py-4 sm:py-5 flex items-center justify-between transition-colors duration-300">
             <h2 className="text-2xl sm:text-3xl font-bold text-ah-navy dark:text-[#edf3ff]">
               {isEditing ? 'Editar Pieza' : 'Agregar Nueva Pieza'}
             </h2>
@@ -371,7 +371,7 @@ export default function PieceModal({ piece, onSave, onClose, saving }) {
           </div>
 
           {/* Footer */}
-          <div className="sticky bottom-0 bg-white dark:bg-[#121e32] border-t border-ah-gray/50 dark:border-[#2a3650] rounded-b-3xl px-6 sm:px-8 py-5 flex gap-4 justify-end transition-colors duration-300">
+          <div className="sticky bottom-0 bg-white dark:bg-[#121e32] border-t border-ah-gray/50 dark:border-[#2a3650] sm:rounded-b-3xl px-4 sm:px-8 py-4 sm:py-5 flex gap-3 sm:gap-4 justify-end transition-colors duration-300">
             <button
               onClick={onClose}
               disabled={saving}

@@ -88,87 +88,161 @@ export default function InventoryTable({ pieces, loading, onPieceClick }) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-ah-gray/50 dark:border-[#2a3650] shadow-sm transition-colors duration-300">
-      <table className="w-full text-left">
-        <thead>
-          <tr className="bg-ah-navy dark:bg-[#0f1a2e] text-white">
-            <th className="px-4 py-4 text-base font-semibold rounded-tl-2xl whitespace-nowrap">
-              <button onClick={() => handleSort('code')} className="flex items-center hover:text-ah-gray transition-colors">
-                Foto
-              </button>
-            </th>
-            <th className="px-4 py-4 text-base font-semibold whitespace-nowrap">
-              <button onClick={() => handleSort('code')} className="flex items-center hover:text-ah-gray transition-colors">
-                Código <SortIcon column="code" />
-              </button>
-            </th>
-            <th className="px-4 py-4 text-base font-semibold whitespace-nowrap">
-              <button onClick={() => handleSort('name')} className="flex items-center hover:text-ah-gray transition-colors">
-                Nombre <SortIcon column="name" />
-              </button>
-            </th>
-            <th className="px-4 py-4 text-base font-semibold whitespace-nowrap hidden sm:table-cell">
-              <button onClick={() => handleSort('type')} className="flex items-center hover:text-ah-gray transition-colors">
-                Tipo <SortIcon column="type" />
-              </button>
-            </th>
-            <th className="px-4 py-4 text-base font-semibold whitespace-nowrap hidden md:table-cell">
-              <button onClick={() => handleSort('estimated_value_usd')} className="flex items-center hover:text-ah-gray transition-colors">
-                Valor USD <SortIcon column="estimated_value_usd" />
-              </button>
-            </th>
-            <th className="px-4 py-4 text-base font-semibold rounded-tr-2xl whitespace-nowrap">
-              <button onClick={() => handleSort('status')} className="flex items-center hover:text-ah-gray transition-colors">
-                Estado <SortIcon column="status" />
-              </button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map((piece, idx) => (
-            <tr
-              key={piece.id}
-              onClick={() => onPieceClick(piece)}
-              className={`table-row-hover cursor-pointer border-b border-ah-gray/30 dark:border-[#2a3650]/60 ${
-                idx % 2 === 0
-                  ? 'bg-white dark:bg-[#1a2236]'
-                  : 'bg-gray-50/50 dark:bg-[#162030]'
+    <>
+      {/* Mobile: Card Layout */}
+      <div className="sm:hidden space-y-3">
+        {/* Mobile sort controls */}
+        <div className="flex gap-2 overflow-x-auto pb-2">
+          {[
+            { col: 'code', label: 'Código' },
+            { col: 'name', label: 'Nombre' },
+            { col: 'type', label: 'Tipo' },
+            { col: 'status', label: 'Estado' },
+          ].map(({ col, label }) => (
+            <button
+              key={col}
+              onClick={() => handleSort(col)}
+              className={`flex items-center gap-1 px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap border transition-colors ${
+                sortColumn === col
+                  ? 'bg-ah-blue/10 dark:bg-ah-blue/20 border-ah-blue/30 dark:border-ah-blue/40 text-ah-blue dark:text-[#7db0ff]'
+                  : 'bg-white dark:bg-[#1a2236] border-ah-gray/50 dark:border-[#2a3650] text-ah-charcoal/60 dark:text-[#a0b4d0]'
               }`}
             >
-              <td className="px-4 py-3">
-                {piece.photo_url ? (
-                  <img
-                    src={piece.photo_url}
-                    alt={piece.name}
-                    className="w-14 h-14 object-cover rounded-lg border border-ah-gray/50 dark:border-[#2a3650]"
-                  />
-                ) : (
-                  <div className="w-14 h-14 rounded-lg bg-gray-100 dark:bg-[#0f1a2e] border border-ah-gray/50 dark:border-[#2a3650] flex items-center justify-center text-2xl">
-                    🖼️
-                  </div>
-                )}
-              </td>
-              <td className="px-4 py-3">
-                <span className="text-lg font-semibold text-ah-navy dark:text-[#edf3ff]">{piece.code}</span>
-              </td>
-              <td className="px-4 py-3">
-                <span className="text-lg text-ah-charcoal dark:text-[#d0daf0]">{piece.name}</span>
-              </td>
-              <td className="px-4 py-3 hidden sm:table-cell">
-                <span className="text-base text-ah-charcoal/70 dark:text-[#a0b4d0]">{piece.type}</span>
-              </td>
-              <td className="px-4 py-3 hidden md:table-cell">
-                <span className="text-lg font-medium text-ah-navy dark:text-[#edf3ff]">
-                  {formatCurrency(piece.estimated_value_usd)}
-                </span>
-              </td>
-              <td className="px-4 py-3">
-                <StatusBadge status={piece.status} />
-              </td>
-            </tr>
+              {label}
+              <SortIcon column={col} />
+            </button>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </div>
+
+        {/* Cards */}
+        {sorted.map((piece) => (
+          <div
+            key={piece.id}
+            onClick={() => onPieceClick(piece)}
+            className="bg-white dark:bg-[#1a2236] rounded-2xl border border-ah-gray/50 dark:border-[#2a3650] shadow-sm p-4 active:scale-[0.98] transition-all cursor-pointer"
+          >
+            <div className="flex gap-4">
+              {/* Photo */}
+              {piece.photo_url ? (
+                <img
+                  src={piece.photo_url}
+                  alt={piece.name}
+                  className="w-20 h-20 object-cover rounded-xl border border-ah-gray/50 dark:border-[#2a3650] flex-shrink-0"
+                />
+              ) : (
+                <div className="w-20 h-20 rounded-xl bg-gray-100 dark:bg-[#0f1a2e] border border-ah-gray/50 dark:border-[#2a3650] flex items-center justify-center text-3xl flex-shrink-0">
+                  🖼️
+                </div>
+              )}
+
+              {/* Info */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="text-lg font-bold text-ah-navy dark:text-[#edf3ff] truncate">{piece.name}</p>
+                    <p className="text-base font-semibold text-ah-blue dark:text-[#7db0ff]">{piece.code}</p>
+                  </div>
+                  <StatusBadge status={piece.status} />
+                </div>
+                <div className="flex items-center gap-3 mt-2">
+                  {piece.type && (
+                    <span className="text-sm text-ah-charcoal/60 dark:text-[#a0b4d0]">{piece.type}</span>
+                  )}
+                  {piece.estimated_value_usd && (
+                    <span className="text-sm font-semibold text-ah-navy dark:text-[#edf3ff]">
+                      {formatCurrency(piece.estimated_value_usd)}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop: Table Layout */}
+      <div className="hidden sm:block overflow-x-auto rounded-2xl border border-ah-gray/50 dark:border-[#2a3650] shadow-sm transition-colors duration-300">
+        <table className="w-full text-left">
+          <thead>
+            <tr className="bg-ah-navy dark:bg-[#0f1a2e] text-white">
+              <th className="px-4 py-4 text-base font-semibold rounded-tl-2xl whitespace-nowrap">
+                <button onClick={() => handleSort('code')} className="flex items-center hover:text-ah-gray transition-colors">
+                  Foto
+                </button>
+              </th>
+              <th className="px-4 py-4 text-base font-semibold whitespace-nowrap">
+                <button onClick={() => handleSort('code')} className="flex items-center hover:text-ah-gray transition-colors">
+                  Código <SortIcon column="code" />
+                </button>
+              </th>
+              <th className="px-4 py-4 text-base font-semibold whitespace-nowrap">
+                <button onClick={() => handleSort('name')} className="flex items-center hover:text-ah-gray transition-colors">
+                  Nombre <SortIcon column="name" />
+                </button>
+              </th>
+              <th className="px-4 py-4 text-base font-semibold whitespace-nowrap hidden md:table-cell">
+                <button onClick={() => handleSort('type')} className="flex items-center hover:text-ah-gray transition-colors">
+                  Tipo <SortIcon column="type" />
+                </button>
+              </th>
+              <th className="px-4 py-4 text-base font-semibold whitespace-nowrap hidden lg:table-cell">
+                <button onClick={() => handleSort('estimated_value_usd')} className="flex items-center hover:text-ah-gray transition-colors">
+                  Valor USD <SortIcon column="estimated_value_usd" />
+                </button>
+              </th>
+              <th className="px-4 py-4 text-base font-semibold rounded-tr-2xl whitespace-nowrap">
+                <button onClick={() => handleSort('status')} className="flex items-center hover:text-ah-gray transition-colors">
+                  Estado <SortIcon column="status" />
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((piece, idx) => (
+              <tr
+                key={piece.id}
+                onClick={() => onPieceClick(piece)}
+                className={`table-row-hover cursor-pointer border-b border-ah-gray/30 dark:border-[#2a3650]/60 ${
+                  idx % 2 === 0
+                    ? 'bg-white dark:bg-[#1a2236]'
+                    : 'bg-gray-50/50 dark:bg-[#162030]'
+                }`}
+              >
+                <td className="px-4 py-3">
+                  {piece.photo_url ? (
+                    <img
+                      src={piece.photo_url}
+                      alt={piece.name}
+                      className="w-14 h-14 object-cover rounded-lg border border-ah-gray/50 dark:border-[#2a3650]"
+                    />
+                  ) : (
+                    <div className="w-14 h-14 rounded-lg bg-gray-100 dark:bg-[#0f1a2e] border border-ah-gray/50 dark:border-[#2a3650] flex items-center justify-center text-2xl">
+                      🖼️
+                    </div>
+                  )}
+                </td>
+                <td className="px-4 py-3">
+                  <span className="text-lg font-semibold text-ah-navy dark:text-[#edf3ff]">{piece.code}</span>
+                </td>
+                <td className="px-4 py-3">
+                  <span className="text-lg text-ah-charcoal dark:text-[#d0daf0]">{piece.name}</span>
+                </td>
+                <td className="px-4 py-3 hidden md:table-cell">
+                  <span className="text-base text-ah-charcoal/70 dark:text-[#a0b4d0]">{piece.type}</span>
+                </td>
+                <td className="px-4 py-3 hidden lg:table-cell">
+                  <span className="text-lg font-medium text-ah-navy dark:text-[#edf3ff]">
+                    {formatCurrency(piece.estimated_value_usd)}
+                  </span>
+                </td>
+                <td className="px-4 py-3">
+                  <StatusBadge status={piece.status} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
